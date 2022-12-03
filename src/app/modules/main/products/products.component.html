@@ -1,0 +1,208 @@
+<div class="products-container">
+  <div class="header">
+    <h1>Productos</h1>
+    <div class="dropdown">
+      <button class="dropbtn">
+        UserName <i class="fa-solid fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content">
+        <a
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasRight"
+          aria-controls="offcanvasRight"
+          *ngIf="userType == 'user'"
+          >Carrito</a
+        >
+        <a routerLink="/login">Cerrar sesión</a>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="custom-button add-button"
+    *ngIf="userType == 'admin'"
+    data-bs-toggle="modal"
+    data-bs-target="#addModal"
+  >
+    Agregar producto
+  </div>
+
+  <div class="row p-5">
+    <div class="col-md-4" *ngFor="let product of products">
+      <div class="card mb-3">
+        <div class="row g-0 align-items-center">
+          <div class="col-md-4">
+            <img [src]="product.image" class="product-img" alt="..." />
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <div class="product-title">
+                <h3>{{ product.name }}</h3>
+                <div class="actions" *ngIf="userType == 'admin'">
+                  <a><i class="fa-solid fa-pen-to-square"></i></a>
+                  <a><i class="fa-solid fa-trash"></i></a>
+                </div>
+              </div>
+
+              <h5 class="text-primary">
+                {{ product.value | currency : "USD" : "symbol" : "3.0" }}
+              </h5>
+              <p>Stock: {{ product.stock }}</p>
+            </div>
+          </div>
+
+          <div class="row justify-content-end">
+            <button
+              class="custom-button col-auto mb-3"
+              *ngIf="userType == 'user'"
+            >
+              Agregar al carrito
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button
+  *ngIf="userType == 'user'"
+  class="custom-button fixedbutton"
+  type="button"
+  data-bs-toggle="offcanvas"
+  data-bs-target="#offcanvasRight"
+  aria-controls="offcanvasRight"
+>
+  Ver carrito
+  <i class="fa-solid fa-cart-shopping"></i>
+</button>
+
+<!-- *********************************************************************** Carrito -->
+<div
+  class="offcanvas offcanvas-end"
+  tabindex="-1"
+  id="offcanvasRight"
+  aria-labelledby="offcanvasRightLabel"
+>
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasRightLabel">
+      <i class="fa-solid fa-cart-shopping"></i> Carrito de compras
+    </h5>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    ></button>
+  </div>
+  <ul class="list-group">
+    <li class="list-group-item">
+      <div class="list-group-item-content">
+        <img
+          src="https://srv.latostadora.com/designall.dll/angular__angularjs--i:135623783236013562321243;c:783236;s:H_J3;w:700;h:520;k:371ef3cabec6a9ebeebfd885b2395da8.jpg"
+        />
+        <div class="product-data">
+          <h5>Camiseta</h5>
+          <p>$35,000</p>
+        </div>
+        <div class="add-item">
+          <a (click)="changeQuantity('minus')"
+            ><i class="fa-solid fa-minus"></i
+          ></a>
+          <p>{{ quantity }}</p>
+          <a (click)="changeQuantity('plus')"
+            ><i class="fa-solid fa-plus"></i
+          ></a>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<!-- ****************************************** Modals -->
+<div
+  class="modal fade"
+  id="addModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          Agregar producto
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="productForm">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Nombre del producto</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              formControlName="name"
+              placeholder="Ej. productName"
+            />
+            <span class="text-danger" *ngIf="validField('name')"
+              >Este campo es requerido</span
+            >
+          </div>
+
+          <div class="mb-3">
+            <label for="valueData" class="form-label">Precio</label>
+            <input
+              type="number"
+              class="form-control"
+              id="valueData"
+              aria-describedby="emailHelp"
+              formControlName="value"
+              placeholder="Ej. 35000"
+            />
+            <span class="text-danger" *ngIf="validField('value')"
+              >Este campo es requerido</span
+            >
+          </div>
+
+          <div class="mb-3">
+            <label for="stockData" class="form-label">Stock</label>
+            <input
+              type="number"
+              class="form-control"
+              id="stockData"
+              aria-describedby="emailHelp"
+              formControlName="stock"
+              placeholder="Ej. 20"
+            />
+            <span class="text-danger" *ngIf="validField('stock')"
+              >Este campo es requerido</span
+            >
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          [disabled]="!productForm.valid"
+        >
+          Agregar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

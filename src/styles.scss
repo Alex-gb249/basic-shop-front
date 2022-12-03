@@ -1,0 +1,21 @@
+/* You can add global styles to this file, and also import other style files */
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+.custom-button {
+  color: #fff;
+  border: none;
+  background-color: #3200c3;
+  padding: 0.5rem;
+  border-radius: 0.4rem;
+  transition: 0.3s;
+  text-align: center;
+}
+
+.custom-button:hover {
+  color: #3200c3;
+  border: solid 1px #3200c3;
+  background-color: #fff;
+  cursor: pointer;
+}
