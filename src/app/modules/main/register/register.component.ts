@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Role } from '../../interfaces/user.interface';
+
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -9,6 +13,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class RegisterComponent implements OnInit {
 
   constructor(
+    private userService: UserService,
+    private router: Router,
     private fb: FormBuilder
   ) { }
 
@@ -40,10 +46,12 @@ export class RegisterComponent implements OnInit {
   register() {
     let data = {
       ...this.registerForm.value,
-      roles: ["ROLE_USER"],
+      roles: [Role.ROLE_USER]
     }
-    console.log(data);
-
+    this.userService.saveUser(data).subscribe(resp => {
+        this.router.navigate(["/login"]);
+      }
+    );
   }
 
 }

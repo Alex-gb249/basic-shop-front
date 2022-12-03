@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -10,6 +11,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   constructor(
+    private userService: UserService,
     private router: Router,
     private fb: FormBuilder
   ) { }
@@ -36,10 +38,10 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    let data = this.loginForm.value
-    console.log(data);
-    this.router.navigate(["/products"])
-
+    let data = this.loginForm.value;
+    this.userService.login(data).subscribe(resp => {
+      this.router.navigate(["/products"]);
+    });
 
   }
 

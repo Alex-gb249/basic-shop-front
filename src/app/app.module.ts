@@ -7,6 +7,8 @@ import { RegisterComponent } from './modules/main/register/register.component';
 import { LoginComponent } from './modules/main/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductsComponent } from './modules/main/products/products.component';
+import { UserService } from './modules/services/user.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -19,9 +21,10 @@ import { ProductsComponent } from './modules/main/products/products.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

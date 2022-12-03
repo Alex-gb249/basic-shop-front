@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "crud_bryan": {
+    "basic_shop": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/crud_bryan",
+            "outputPath": "dist/basic_shop",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -71,10 +71,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "crud_bryan:build:production"
+              "browserTarget": "basic_shop:build:production"
             },
             "development": {
-              "browserTarget": "crud_bryan:build:development"
+              "browserTarget": "basic_shop:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -82,7 +82,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "crud_bryan:build"
+            "browserTarget": "basic_shop:build"
           }
         },
         "test": {

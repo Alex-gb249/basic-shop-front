@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Product } from '../../interfaces/product.interface';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-products',
@@ -12,64 +14,18 @@ export class ProductsComponent implements OnInit {
   userType: string = "user"
   quantity: number = 0;
 
-  products = [
-    {
-      id: 1,
-      name: "Camiseta",
-      value: 35000,
-      stock: 30,
-      image: "https://srv.latostadora.com/designall.dll/angular__angularjs--i:135623783236013562321243;c:783236;s:H_J3;w:700;h:520;k:371ef3cabec6a9ebeebfd885b2395da8.jpg"
-    },
-    {
-      id: 1,
-      name: "Camiseta",
-      value: 35000,
-      stock: 30,
-      image: "https://srv.latostadora.com/designall.dll/angular__angularjs--i:135623783236013562321243;c:783236;s:H_J3;w:700;h:520;k:371ef3cabec6a9ebeebfd885b2395da8.jpg"
-    },
-    {
-      id: 1,
-      name: "Camiseta",
-      value: 35000,
-      stock: 30,
-      image: "https://srv.latostadora.com/designall.dll/angular__angularjs--i:135623783236013562321243;c:783236;s:H_J3;w:700;h:520;k:371ef3cabec6a9ebeebfd885b2395da8.jpg"
-    },
-    {
-      id: 1,
-      name: "Camiseta",
-      value: 35000,
-      stock: 30,
-      image: "https://srv.latostadora.com/designall.dll/angular__angularjs--i:135623783236013562321243;c:783236;s:H_J3;w:700;h:520;k:371ef3cabec6a9ebeebfd885b2395da8.jpg"
-    },
-    {
-      id: 1,
-      name: "Camiseta",
-      value: 35000,
-      stock: 30,
-      image: "https://srv.latostadora.com/designall.dll/angular__angularjs--i:135623783236013562321243;c:783236;s:H_J3;w:700;h:520;k:371ef3cabec6a9ebeebfd885b2395da8.jpg"
-    },
-    {
-      id: 1,
-      name: "Camiseta",
-      value: 35000,
-      stock: 30,
-      image: "https://srv.latostadora.com/designall.dll/angular__angularjs--i:135623783236013562321243;c:783236;s:H_J3;w:700;h:520;k:371ef3cabec6a9ebeebfd885b2395da8.jpg"
-    },
-    {
-      id: 1,
-      name: "Camiseta",
-      value: 35000,
-      stock: 30,
-      image: "https://srv.latostadora.com/designall.dll/angular__angularjs--i:135623783236013562321243;c:783236;s:H_J3;w:700;h:520;k:371ef3cabec6a9ebeebfd885b2395da8.jpg"
-    },
-  ]
+  products:Product[] = [];
 
   constructor(
+    private productService: ProductService,
     private router: Router,
     private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
+    this.productService.getProducts().subscribe(resp => {
+      this.products = resp;
+    });
   }
 
   public productForm: FormGroup = this.fb.group({
